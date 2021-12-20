@@ -71,6 +71,10 @@ def get_rnd_string(length=20, complexity=None):
         return password
 
 
+def generate_password(length=20, complexity=None):
+    return get_rnd_string(length, complexity)
+
+
 def check_create_dir(*filename):
     filenames = [filename]
     if isinstance(filename, tuple):
