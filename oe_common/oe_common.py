@@ -5,6 +5,8 @@ import time
 import errno
 import os
 import re
+import datetime
+import pathlib
 
 
 def fix_block_encoding_errors(block):
@@ -87,6 +89,28 @@ def check_create_dir(*filename):
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
+
+
+class Logger:
+    def __init__(self, to_console=True, file=None):
+        self._to_console = to_console
+        if isinstance(file, str):
+            if file[0] != '/':
+                full_path = os.path.join(pathlib.Path().absolute(), file)
+            else:
+                full_path = file
+            self._file = full_path
+
+    def log(self, *data):
+        now_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        data_string = ' '.join([str(a) for a in data])
+        log_text = '%s %s' % (now_date, data_string)
+        if self._to_console:
+            print(log_text)
+        if self._file:
+            check_create_dir(self._file)
+            with open(self._file, 'a') as f:
+                f.write(log_text)
 
 
 class DinConsole:
