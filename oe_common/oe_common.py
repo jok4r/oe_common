@@ -100,6 +100,8 @@ class Logger:
             else:
                 full_path = file
             self._file = full_path
+            check_create_dir(self._file)
+            pathlib.Path(self._file).touch()
         else:
             self._file = None
 
@@ -110,7 +112,6 @@ class Logger:
         if self._to_console:
             print(log_text)
         if self._file:
-            check_create_dir(self._file)
             with open(self._file, 'a') as f:
                 f.write(log_text)
 
