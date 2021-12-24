@@ -113,7 +113,7 @@ class Logger:
             print(log_text)
         if self._file:
             with open(self._file, 'a') as f:
-                f.write(log_text)
+                f.write(log_text + '\n')
 
 
 class DinConsole:
