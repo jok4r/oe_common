@@ -100,6 +100,8 @@ class Logger:
             else:
                 full_path = file
             self._file = full_path
+        else:
+            self._file = None
 
     def log(self, *data):
         now_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
