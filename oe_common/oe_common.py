@@ -91,6 +91,15 @@ def check_create_dir(*filename):
                     raise
 
 
+def replace_string_in_file(path, regex, replaced):
+    with open(path, 'r+') as f:
+        file = f.read()
+        f.seek(0)
+        f.truncate()
+        re.sub(regex, replaced, file)
+        f.write(file)
+
+
 class Logger:
     def __init__(self, to_console=True, file=None):
         self._to_console = to_console
