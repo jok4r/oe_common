@@ -92,12 +92,15 @@ def check_create_dir(*filename):
 
 
 def replace_string_in_file(path, regex, replaced):
-    with open(path, 'r+') as f:
-        file = f.read()
-        f.seek(0)
-        f.truncate()
-        re.sub(regex, replaced, file)
-        f.write(file)
+    if os.path.isfile(path):
+        with open(path, 'r+') as f:
+            file = f.read()
+            f.seek(0)
+            f.truncate()
+            re.sub(regex, replaced, file)
+            f.write(file)
+    else:
+        print("Warning! %s not found" % path)
 
 
 class Logger:
