@@ -19,11 +19,12 @@ with open('LICENSE.txt') as f:
 
 setup(
     name='oe_common',
-    version='0.3.2',
+    version='0.3.3',
     author='Dmitry Yakovlev',
     author_email='info@overhosting.ru',
     description='OeCommon',
     long_description=readme,
+    long_description_content_type='text/markdown',
     python_requires='>=3.7',
     packages=['oe_common'],
     licence=licence,
