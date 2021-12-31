@@ -7,6 +7,8 @@ import os
 import re
 import datetime
 import pathlib
+import oecommon_getsize
+# import get
 
 
 def fix_block_encoding_errors(block):
@@ -101,6 +103,13 @@ def replace_string_in_file(path, regex, replaced):
             f.write(file)
     else:
         print("Warning! %s not found" % path)
+
+
+def get_directory_size(path):
+    if os.path.isdir(path):
+        size = oecommon_getsize.get_directory_size(path)
+        return size
+    return 0
 
 
 class Logger:
