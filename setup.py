@@ -19,7 +19,7 @@ with open('LICENSE.txt') as f:
 
 setup(
     name='oe_common',
-    version='1.0.0',
+    version='1.0.1',
     author='Dmitry Yakovlev',
     author_email='info@overhosting.ru',
     description='OeCommon',
@@ -27,6 +27,6 @@ setup(
     long_description_content_type='text/markdown',
     python_requires='>=3.7',
     packages=['oe_common'],
-    licence=licence,
+    licence='MIT',
     ext_modules=[get_directory_size],
 )
