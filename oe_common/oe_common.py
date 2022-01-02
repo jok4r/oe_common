@@ -100,8 +100,10 @@ def replace_string_in_file(path, regex, replaced):
             f.truncate()
             re.sub(regex, replaced, file)
             f.write(file)
+        return True
     else:
         print("Warning! %s not found" % path)
+        return False
 
 
 def get_directory_size(path):
