@@ -92,7 +92,7 @@ def check_create_dir(*filename):
                     raise
 
 
-def replace_string_in_file(path, regex, replaced, flags=None):
+def replace_string_in_file(path, regex, replaced, flags=0):
     if os.path.isfile(path):
         with open(path, 'r+') as f:
             file = f.read()
