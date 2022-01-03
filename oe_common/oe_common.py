@@ -113,6 +113,14 @@ def get_directory_size(path):
     return 0
 
 
+def get_filename_and_extension(path):
+    p = os.path.basename(path)
+    a = p.split('.')
+    filename = '.'.join(a[:-1])
+    extension = ''.join(a[-1:])
+    return filename, extension
+
+
 class Logger:
     def __init__(self, to_console=True, file=None):
         self._to_console = to_console
