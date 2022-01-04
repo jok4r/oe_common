@@ -145,8 +145,8 @@ def get_disk_stats():
                         'discards merged': int(sp[15]),
                         'sectors discarded': int(sp[16]),
                         'time spent discarding': int(sp[17]),
-                        'flush requests completed successfully': int(sp[18]),
-                        'time spent flushing': int(sp[19]),
+                        'flush requests completed successfully': int(sp[18]) if len(sp) > 18 else 0,
+                        'time spent flushing': int(sp[19]) if len(sp) > 18 else 0,
                     }
             return stats
     else:
