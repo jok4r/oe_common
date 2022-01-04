@@ -114,11 +114,54 @@ def get_directory_size(path):
 
 
 def get_filename_and_extension(path):
-    p = os.path.basename(path)
-    a = p.split('.')
-    filename = '.'.join(a[:-1])
-    extension = ''.join(a[-1:])
-    return filename, extension
+    return os.path.splitext(os.path.basename(path))
+
+
+def get_disk_stats():
+    if os.name == 'posix':
+        with open('/proc/diskstats') as f:
+            stats_file = f.readlines()
+            stats = {}
+            for disk_stats_text in stats_file:
+                sp = disk_stats_text.split()
+                device_name = sp[2]
+                if re.match(r'sd.$|nvme\dn\d$', device_name):
+                    stats[device_name] = {
+                        'major number': int(sp[0]),
+                        'minor number': int(sp[1]),
+                        'device name': sp[2],
+                        'reads completed successfully': int(sp[3]),
+                        'reads merged': int(sp[4]),
+                        'sectors read': int(sp[5]),
+                        'time spent reading (ms)': int(sp[6]),
+                        'writes completed': int(sp[7]),
+                        'writes merged': int(sp[8]),
+                        'sectors written': int(sp[9]),
+                        'time spent writing (ms)': int(sp[10]),  # time spent writing (ms)
+                        'I/Os currently in progress': int(sp[11]),  # I/Os currently in progress
+                        'tot_ticks': int(sp[12]),  # time spent doing I/Os (ms)
+                        'weighted time spent doing I/Os (ms)': int(sp[13]),
+                        'discards completed successfully': int(sp[14]),
+                        'discards merged': int(sp[15]),
+                        'sectors discarded': int(sp[16]),
+                        'time spent discarding': int(sp[17]),
+                        'flush requests completed successfully': int(sp[18]),
+                        'time spent flushing': int(sp[19]),
+                    }
+            return stats
+    else:
+        raise RuntimeError('get_disk_stats can be run only on Linux')
+
+
+def get_disk_utilization(prev_ticks, ticks, itv):
+    # prev_ticks - previous get_disk_stats()['tot_ticks']
+    # ticks - current get_disk_stats()['tot_ticks']
+    # itv - time between previous and current calls of get_disk_stats
+    util = (float(ticks - prev_ticks)) / itv * 100
+    util_percent = util / 10.0 / 100.0
+    if util_percent > 100.0:
+        util_percent = 100.0
+    return util_percent
 
 
 class Logger:

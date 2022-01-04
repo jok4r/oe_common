@@ -19,7 +19,7 @@ with open('LICENSE.txt') as f:
 
 setup(
     name='oe_common',
-    version='1.0.7',
+    version='1.1.1',
     author='Dmitry Yakovlev',
     author_email='info@overhosting.ru',
     description='OeCommon',
