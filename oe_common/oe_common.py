@@ -20,6 +20,33 @@ def fix_block_encoding_errors(block):
     return ''.join(fixed)
 
 
+def fix_file_encoding_errors(*file):
+    files = [file]
+    if isinstance(file, tuple):
+        files = file
+
+    for wf in files:
+        with open(wf, 'rb') as f:
+            cnt = 0
+            wa = []
+            for line in f:
+                try:
+                    line.decode('utf-8')
+                except UnicodeDecodeError as e:
+                    r_line = fix_unicode_string(line)
+                    wa.append([line, r_line])
+                cnt += 1
+
+            f.seek(0)
+            b = f.read()
+            # b = re.sub(b"\xd1 ", b'\x3f', b)
+            for w in wa:
+                b = b.replace(w[0], w[1])
+
+        with open(wf, 'wb') as f:
+            f.write(b)
+
+
 def fix_unicode_string(line):
     if not isinstance(line, bytes):
         raise TypeError('line is not bytes')
