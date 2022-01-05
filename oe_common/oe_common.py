@@ -134,10 +134,16 @@ def replace_string_in_file(path, regex, replaced, flags=0):
 
 
 def get_directory_size(path):
-    if os.path.isdir(path):
-        size = oecommon_getsize.get_directory_size(path)
-        return size
-    return 0
+    total = 0
+    if not os.path.isdir(path):
+        return 0
+    with os.scandir(path) as it:
+        for entry in it:
+            if entry.is_file() and not entry.is_symlink():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_directory_size(entry.path)
+    return total
 
 
 def get_filename_and_extension(path):

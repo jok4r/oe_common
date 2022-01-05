@@ -1,15 +1,4 @@
-from setuptools import setup, Extension
-
-get_directory_size = Extension(
-    'oecommon_getsize',
-    define_macros=[('MAJOR_VERSION', '1'),
-                   ('MINOR_VERSION', '0')],
-    include_dirs=['/usr/local/include'],
-    libraries=[],
-    library_dirs=[],
-    sources=['Modules/oecommon_getsizemodule.cpp'],
-    extra_compile_args=['-std=c++17']
-)
+from setuptools import setup
 
 with open('README.md') as f:
     readme = f.read()
@@ -19,7 +8,7 @@ with open('LICENSE.txt') as f:
 
 setup(
     name='oe_common',
-    version='1.2.1',
+    version='1.2.2',
     author='Dmitry Yakovlev',
     author_email='info@overhosting.ru',
     description='OeCommon',
@@ -28,5 +17,5 @@ setup(
     python_requires='>=3.6',
     packages=['oe_common'],
     licence='MIT',
-    ext_modules=[get_directory_size],
+    url='https://github.com/jok4r/oe_common',
 )
