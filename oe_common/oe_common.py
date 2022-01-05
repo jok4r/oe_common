@@ -7,7 +7,6 @@ import os
 import re
 import datetime
 import pathlib
-import oecommon_getsize
 
 
 def fix_block_encoding_errors(block):
