@@ -173,12 +173,12 @@ def get_disk_stats():
                         'I/Os currently in progress': int(sp[11]),  # I/Os currently in progress
                         'tot_ticks': int(sp[12]),  # time spent doing I/Os (ms)
                         'weighted time spent doing I/Os (ms)': int(sp[13]),
-                        'discards completed successfully': int(sp[14]),
-                        'discards merged': int(sp[15]),
-                        'sectors discarded': int(sp[16]),
-                        'time spent discarding': int(sp[17]),
+                        'discards completed successfully': int(sp[14]) if len(sp) > 14 else 0,
+                        'discards merged': int(sp[15]) if len(sp) > 15 else 0,
+                        'sectors discarded': int(sp[16]) if len(sp) > 16 else 0,
+                        'time spent discarding': int(sp[17]) if len(sp) > 17 else 0,
                         'flush requests completed successfully': int(sp[18]) if len(sp) > 18 else 0,
-                        'time spent flushing': int(sp[19]) if len(sp) > 18 else 0,
+                        'time spent flushing': int(sp[19]) if len(sp) > 19 else 0,
                     }
             return stats
     else:
