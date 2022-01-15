@@ -104,7 +104,7 @@ def generate_password(length=20, complexity=None):
     return get_rnd_string(length, complexity)
 
 
-def check_create_dir(*filename):
+def create_dir(*filename):
     filenames = [filename]
     if isinstance(filename, tuple):
         filenames = filename
@@ -116,6 +116,10 @@ def check_create_dir(*filename):
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
+
+
+def check_create_dir(*filename):
+    create_dir(*filename)
 
 
 def replace_string_in_file(path, regex, replaced, flags=0):
