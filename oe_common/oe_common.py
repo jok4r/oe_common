@@ -110,12 +110,12 @@ def create_dir(*filename):
         filenames = filename
 
     for f in filenames:
-        if not os.path.exists(os.path.dirname(f)):
-            try:
-                os.makedirs(os.path.dirname(f))
-            except OSError as exc:  # Guard against race condition
-                if exc.errno != errno.EEXIST:
-                    raise
+        if os.path.isfile(f):
+            d = os.path.dirname(f)
+        else:
+            d = f
+        if not os.path.exists(d):
+            os.makedirs(os.path.dirname(f), exist_ok=True)
 
 
 def check_create_dir(*filename):
