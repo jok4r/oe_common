@@ -7,6 +7,7 @@ import os
 import re
 import datetime
 import pathlib
+import hashlib
 
 
 def fix_block_encoding_errors(block):
@@ -198,6 +199,20 @@ def get_disk_utilization(prev_ticks, ticks, itv):
     if util_percent > 100.0:
         util_percent = 100.0
     return util_percent
+
+
+def get_array_hash(d):
+    h = hashlib.sha1()
+    if isinstance(d, list):
+        for v in d:
+            h.update(str(v).encode())
+    elif isinstance(d, dict):
+        for k, v in d.items():
+            h.update(str(k).encode())
+            h.update(str(v).encode())
+    else:
+        raise RuntimeError("Unsupported array type: %s" % type(d))
+    return h.hexdigest()
 
 
 class Logger:
