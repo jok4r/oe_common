@@ -1,4 +1,5 @@
 import math
+import shutil
 import string
 import random
 import time
@@ -121,6 +122,18 @@ def create_dir(*filename):
 
 def check_create_dir(*filename):
     create_dir(*filename)
+
+
+def rm(*filename):
+    filenames = [filename]
+    if isinstance(filename, tuple):
+        filenames = filename
+
+    for f in filenames:
+        if os.path.isfile(f):
+            os.remove(f)
+        elif os.path.isdir(f):
+            shutil.rmtree(f, ignore_errors=True)
 
 
 def replace_string_in_file(path, regex, replaced, flags=0):
