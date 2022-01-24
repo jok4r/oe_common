@@ -106,13 +106,13 @@ def generate_password(length=20, complexity=None):
     return get_rnd_string(length, complexity)
 
 
-def create_dir(*filename):
+def create_dir(*filename, is_file=True):
     filenames = [filename]
     if isinstance(filename, tuple):
         filenames = filename
 
     for f in filenames:
-        if os.path.isfile(f):
+        if is_file:
             d = os.path.dirname(f)
         else:
             d = f
