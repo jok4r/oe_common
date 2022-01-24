@@ -30,6 +30,16 @@ $ python3 -m pip install git+https://github.com/jok4r/oe_common.git
 
 **get_directory_size(path)** - Get size of specified directory. This function uses C++ module for work faster. If directory is not exists, not raises an exeption, just return zero size.
 
+**get_filename_and_extension(path)** - Get filename and extension of file. Using simple os.path.splitext with basename of path.
+
+**get_disk_stats()** - Reads data from /proc/diskstats and parse it.
+
+**get_disk_utilization(prev_tot_ticks, tot_ticks, itv)** - Count disk utilization (0-100). Ticks is "tot_ticks" from function above. Itv is time between previous and current ticks.
+
+**get_array_hash(array)** - Get hash from array (list or dict). Currently hash func is SHA-1.
+
+**rm(\*filename)** - Remove file or directory without errors if file is not exist (like rm -rf). Can specify multiple values: *rm(file1, dir1)*
+
 ### Classes
 
 #### Logger
@@ -71,6 +81,16 @@ Check read/write speed.
 **replace_string_in_file(path, regex, replaced)** - Поиск и замена строки в файле. Пример: *replace_string_in_file("file.txt", r'string', r'replaced')*
 
 **get_directory_size(path)** - Получить размер директории (папки). Выполняется с помощью модуля на C++ для ускорения работы. В случае если папка не существует, не выдает исключение, выдает нулевой размер.
+
+**get_filename_and_extension(path)** - Получить имя и расширение файла. Используется os.path.splitext и basename от path.
+
+**get_disk_stats()** - Читает и парсит /proc/diskstats.
+
+**get_disk_utilization(prev_tot_ticks, tot_ticks, itv)** - Считает утилизацию диска (0-100). Ticks - это "tot_ticks" из функции выше. Itv - это время между замерами (вызовами get_disk_stats).
+
+**get_array_hash(array)** - Получает хэш из массива (list или dict). В данный момент используется алгоритм SHA-1.
+
+**rm(\*filename)** - Удаляет файл или директорию (рекурсивно), не выдавая каких-либо ошибок и другой информации в консоль (аналог rm -rf). На вход можно подавать сразу несколько значений: *rm(file1, dir1)*
 
 ### Классы
 
