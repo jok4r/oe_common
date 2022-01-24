@@ -117,7 +117,7 @@ def create_dir(*filename, is_file=True):
         else:
             d = f
         if not os.path.exists(d):
-            os.makedirs(f, exist_ok=True)
+            os.makedirs(d, exist_ok=True)
 
 
 def check_create_dir(*filename):
