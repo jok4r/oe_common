@@ -150,16 +150,35 @@ def replace_string_in_file(path, regex, replaced, flags=0):
         return False
 
 
-def get_directory_size(path):
+def get_directory_size(path, lvl=0, max_lvl=100, verbose=False):
     total = 0
+    lvl += 1
     if not os.path.isdir(path):
         return 0
     with os.scandir(path) as it:
         for entry in it:
-            if entry.is_file() and not entry.is_symlink():
-                total += entry.stat().st_size
-            elif entry.is_dir():
-                total += get_directory_size(entry.path)
+            try:
+                if entry.is_file() or entry.is_symlink():
+                    size = entry.stat(follow_symlinks=False).st_size
+
+                    if entry.stat().st_nlink > 1 and not entry.is_symlink():
+                        print('nlink: %s %s delim: %s/%s' % (entry.stat().st_nlink, entry.name, size, entry.stat().st_nlink))
+                        size = size / entry.stat().st_nlink
+                    if verbose:
+                        print('%s : %s' % (entry.name, size))
+
+                    total += size
+                elif lvl >= max_lvl:
+                    if verbose:
+                        print('lvl break (%s), total: %s, path: %s' % (lvl, total, path))
+                    return total
+                elif entry.is_dir():
+                    if verbose:
+                        print('opening dir: %s' % entry.name)
+                    total += get_directory_size(entry.path, lvl=lvl)
+            except (OSError, FileNotFoundError):
+                pass
+    # print('lvl: %s' % lvl)
     return total
 
 
