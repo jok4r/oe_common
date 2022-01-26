@@ -40,6 +40,8 @@ $ python3 -m pip install git+https://github.com/jok4r/oe_common.git
 
 **rm(\*filename)** - Remove file or directory without errors if file is not exist (like rm -rf). Can specify multiple values: *rm(file1, dir1)*
 
+**chown(path, username, group=None, recursive=True)** - Change owner of directory/file. If *group* is not assigned, it will have same value as *username*
+
 ### Classes
 
 #### Logger
@@ -91,6 +93,8 @@ Check read/write speed.
 **get_array_hash(array)** - Получает хэш из массива (list или dict). В данный момент используется алгоритм SHA-1.
 
 **rm(\*filename)** - Удаляет файл или директорию (рекурсивно), не выдавая каких-либо ошибок и другой информации в консоль (аналог rm -rf). На вход можно подавать сразу несколько значений: *rm(file1, dir1)*
+
+**chown(path, username, group=None, recursive=True)** - Установить права на папку/файл. Если не указать *group*, то группа будет иметь то же значение, что и username.
 
 ### Классы
 
