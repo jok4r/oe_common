@@ -254,7 +254,7 @@ def chown(path, username, group=None, recursive=True):
         r_str = '-R '
     else:
         r_str = ''
-    os.system('chown {0}{1}:{2} {3}'.format(r_str, username, group, path))
+    os.system('chown {0}{1}:{2} "{3}"'.format(r_str, username, group, path))
 
 
 class Logger:
