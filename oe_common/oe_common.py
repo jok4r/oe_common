@@ -248,13 +248,14 @@ def get_array_hash(d):
 
 
 def chown(path, username, group=None, recursive=True):
-    if not group:
-        group = username
-    if recursive:
-        r_str = '-R '
-    else:
-        r_str = ''
-    os.system('chown {0}{1}:{2} "{3}"'.format(r_str, username, group, path))
+    if os.path.exists(path):
+        if not group:
+            group = username
+        if recursive:
+            r_str = '-R '
+        else:
+            r_str = ''
+        os.system('chown {0}{1}:{2} "{3}"'.format(r_str, username, group, path))
 
 
 class Logger:
