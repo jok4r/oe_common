@@ -9,6 +9,9 @@ import re
 import datetime
 import pathlib
 import hashlib
+import subprocess
+import requests
+import json
 
 
 def fix_block_encoding_errors(block):
@@ -256,6 +259,49 @@ def chown(path, username, group=None, recursive=True):
         else:
             r_str = ''
         os.system('chown {0}{1}:{2} "{3}"'.format(r_str, username, group, path))
+
+
+default_interfaces = ['enp', 'eth']
+
+
+def get_interface(interfaces=None):
+    if not interfaces:
+        interfaces = default_interfaces
+    for inet in os.listdir('/sys/class/net/'):
+        for interface in interfaces:
+            if interface in inet:
+                return inet
+    return False
+
+
+def get_ip_addresses(interface=None):
+    if os.name == 'posix':
+        return _get_ip_addresses_linux(interface)
+    elif os.name == 'nt':
+        return _get_ip_addresses_windows()
+    else:
+        raise RuntimeError("Unsupported OS")
+
+
+def get_external_ip():
+    group = json.loads(requests.get('http://jsonip.com/').content.decode())
+    return group['ip']
+
+
+def _get_ip_addresses_linux(interface=None):
+    if not interface:
+        interface = get_interface()
+    output = subprocess.getoutput('ip address show %s' % interface)
+    ips_list = re.findall(r'inet (\d+\.\d+\.\d+\.\d+)', output)
+
+    return ips_list
+
+
+def _get_ip_addresses_windows():
+    output = subprocess.getoutput('ipconfig')
+    ips_list = re.findall(r'IPv4 Address.*: (\d+\.\d+\.\d+\.\d+)', output)
+
+    return ips_list
 
 
 class Logger:

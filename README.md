@@ -42,6 +42,12 @@ $ python3 -m pip install git+https://github.com/jok4r/oe_common.git
 
 **chown(path, username, group=None, recursive=True)** - Change owner of directory/file. If *group* is not assigned, it will have same value as *username*
 
+**get_interface(interfaces=None)** - Get default network interface. If *interfaces* arg is None (default), will be used default array of interfaces: ['enp', 'eth']
+
+**get_ip_addresses(interface=None)** - Get all ip addresses on external interface (if interface is not specified, will be select default interface by function above)
+
+**get_external_ip()** - Get external ip
+
 ### Classes
 
 #### Logger
@@ -95,6 +101,12 @@ Check read/write speed.
 **rm(\*filename)** - Удаляет файл или директорию (рекурсивно), не выдавая каких-либо ошибок и другой информации в консоль (аналог rm -rf). На вход можно подавать сразу несколько значений: *rm(file1, dir1)*
 
 **chown(path, username, group=None, recursive=True)** - Установить права на папку/файл. Если не указать *group*, то группа будет иметь то же значение, что и username.
+
+**get_interface(interfaces=None)** - Получить интерфейс по умолчанию. Если аргумент *interfaces* не указан (по умолчанию), будет использован стандартный массив интерфейсов: *['enp', 'eth']*
+
+**get_ip_addresses(interface=None)** - Получить все ip адреса интерфейса (если не указан, будет выбран стандартный интерфейс с помощью функции выше).
+
+**get_external_ip()** - Получить внешний ip адрес.
 
 ### Классы
 
