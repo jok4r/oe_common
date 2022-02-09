@@ -153,19 +153,32 @@ def replace_string_in_file(path, regex, replaced, flags=0):
         return False
 
 
-def get_directory_size(path, lvl=0, max_lvl=100, verbose=False):
+start_time = 0
+
+
+def get_directory_size(path, lvl=0, max_lvl=100, time_limit=5, verbose=False):
+    global start_time
     total = 0
+
+    if lvl == 0:
+        start_time = time.perf_counter()
+
     lvl += 1
     if not os.path.isdir(path):
         return 0
     with os.scandir(path) as it:
         for entry in it:
+            exec_time = time.perf_counter() - start_time
+            if exec_time > time_limit:
+                print('time limit reached (%ss)' % time_limit)
+                return total
             try:
                 if entry.is_file() or entry.is_symlink():
                     size = entry.stat(follow_symlinks=False).st_size
 
                     if entry.stat().st_nlink > 1 and not entry.is_symlink():
-                        print('nlink: %s %s delim: %s/%s' % (entry.stat().st_nlink, entry.name, size, entry.stat().st_nlink))
+                        if verbose:
+                            print('nlink: %s %s delim: %s/%s' % (entry.stat().st_nlink, entry.name, size, entry.stat().st_nlink))
                         size = size / entry.stat().st_nlink
                     if verbose:
                         print('%s : %s' % (entry.name, size))
