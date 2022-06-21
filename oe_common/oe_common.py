@@ -323,7 +323,7 @@ def get_top_processes_with_open_files(count=3):
     for proc in psutil.process_iter():
         try:
             rd[proc.name()] = len(proc.open_files())
-        except psutil.AccessDenied:
+        except (psutil.AccessDenied, psutil.NoSuchProcess):
             pass
     rd = {k: v for k, v in sorted(rd.items(), key=lambda item: item[1], reverse=True)}
     print("Top %s processes with open files: %s" % (count, ', '.join(["%s: %s" % x for x in list(rd.items())[:count]])))
