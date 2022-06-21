@@ -8,7 +8,7 @@ with open('LICENSE.txt') as f:
 
 setup(
     name='oe_common',
-    version='1.5.1',
+    version='1.6.0',
     author='Dmitry Yakovlev',
     author_email='info@overhosting.ru',
     description='OeCommon',
@@ -16,7 +16,7 @@ setup(
     long_description_content_type='text/markdown',
     python_requires='>=3.6',
     packages=['oe_common'],
-    requires=['requests'],
+    requires=['requests', 'psutil'],
     licence='MIT',
     url='https://github.com/jok4r/oe_common',
 )

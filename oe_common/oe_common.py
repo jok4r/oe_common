@@ -12,6 +12,7 @@ import hashlib
 import subprocess
 import requests
 import json
+import psutil
 
 
 def fix_block_encoding_errors(block):
@@ -315,6 +316,17 @@ def _get_ip_addresses_windows():
     ips_list = re.findall(r'IPv4 Address.*: (\d+\.\d+\.\d+\.\d+)', output)
 
     return ips_list
+
+
+def get_top_processes_with_open_files(count=3):
+    rd = {}
+    for proc in psutil.process_iter():
+        try:
+            rd[proc.name()] = len(proc.open_files())
+        except psutil.AccessDenied:
+            pass
+    rd = {k: v for k, v in sorted(rd.items(), key=lambda item: item[1], reverse=True)}
+    print("Top %s processes with open files: %s" % (count, ', '.join(["%s: %s" % x for x in list(rd.items())[:count]])))
 
 
 class Logger:
