@@ -13,6 +13,8 @@ import subprocess
 import requests
 import json
 import psutil
+import signal
+from threading import Thread
 
 
 def fix_block_encoding_errors(block):
@@ -327,6 +329,19 @@ def get_top_processes_with_open_files(count=3):
             pass
     rd = {k: v for k, v in sorted(rd.items(), key=lambda item: item[1], reverse=True)}
     print("Top %s processes with open files: %s" % (count, ', '.join(["%s: %s" % x for x in list(rd.items())[:count]])))
+
+
+def thread_watcher(thread: Thread, name, kill_signal=None, sleep_time=10):
+    if kill_signal is None:
+        kill_signal = signal.SIGTERM
+
+    def tw():
+        while True:
+            if not thread or not thread.is_alive():
+                print("Thread %s crashed" % name)
+                os.kill(os.getpid(), kill_signal)
+            time.sleep(sleep_time)
+    Thread(target=tw).start()
 
 
 class Logger:
