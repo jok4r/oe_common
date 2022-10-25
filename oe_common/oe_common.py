@@ -33,7 +33,7 @@ def fix_file_encoding_errors(*file):
         files = file
 
     for wf in files:
-        with open(wf, 'rb', encoding='utf-8') as f:
+        with open(wf, 'rb') as f:
             cnt = 0
             wa = []
             for line in f:
@@ -50,7 +50,7 @@ def fix_file_encoding_errors(*file):
             for w in wa:
                 b = b.replace(w[0], w[1])
 
-        with open(wf, 'wb', encoding='utf-8') as f:
+        with open(wf, 'wb') as f:
             f.write(b)
 
 
