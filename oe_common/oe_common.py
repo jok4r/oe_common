@@ -33,7 +33,7 @@ def fix_file_encoding_errors(*file):
         files = file
 
     for wf in files:
-        with open(wf, 'rb') as f:
+        with open(wf, 'rb', encoding='utf-8') as f:
             cnt = 0
             wa = []
             for line in f:
@@ -50,7 +50,7 @@ def fix_file_encoding_errors(*file):
             for w in wa:
                 b = b.replace(w[0], w[1])
 
-        with open(wf, 'wb') as f:
+        with open(wf, 'wb', encoding='utf-8') as f:
             f.write(b)
 
 
@@ -144,7 +144,7 @@ def rm(*filename):
 
 def replace_string_in_file(path, regex, replaced, flags=0):
     if os.path.isfile(path):
-        with open(path, 'r+') as f:
+        with open(path, 'r+', encoding='utf-8') as f:
             file = f.read()
             f.seek(0)
             f.truncate()
@@ -207,7 +207,7 @@ def get_filename_and_extension(path):
 
 def get_disk_stats():
     if os.name == 'posix':
-        with open('/proc/diskstats') as f:
+        with open('/proc/diskstats', encoding='utf-8') as f:
             stats_file = f.readlines()
             stats = {}
             for disk_stats_text in stats_file:
@@ -365,7 +365,7 @@ class Logger:
         if self._to_console:
             print(log_text)
         if self._file:
-            with open(self._file, 'a') as f:
+            with open(self._file, 'a', encoding='utf-8') as f:
                 f.write(log_text + '\n')
 
 
