@@ -136,7 +136,7 @@ def rm(*filename):
         filenames = filename
 
     for f in filenames:
-        if os.path.isfile(f):
+        if os.path.isfile(f) or os.path.islink(f):
             os.remove(f)
         elif os.path.isdir(f):
             shutil.rmtree(f, ignore_errors=True)
