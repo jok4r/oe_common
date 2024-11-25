@@ -16,7 +16,7 @@ setup(
     long_description_content_type='text/markdown',
     python_requires='>=3.6',
     packages=['oe_common'],
-    requires=['requests', 'psutil'],
+    install_requires=['requests', 'psutil'],
     licence='MIT',
     url='https://github.com/jok4r/oe_common',
 )
